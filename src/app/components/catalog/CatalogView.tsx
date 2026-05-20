@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Card } from '../ui/Card';
-import { Button } from '../ui/Button';
-import { Input } from '../ui/Input';
-import { Textarea } from '../ui/Textarea';
-import { Badge } from '../ui/Badge';
+import { Card } from '../ui/card';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Textarea } from '../ui/textarea';
+import { Badge } from '../ui/badge';
 import { 
   Plus, Edit2, Trash2, X, Coffee, Cookie, Croissant, 
   Loader2, Star, Flame, Info, ChevronDown, ChevronUp,

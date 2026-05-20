@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card } from '../ui/Card';
-import { Badge } from '../ui/Badge';
+import { Card } from '../ui/card';
+import { Badge } from '../ui/badge';
 import { Skeleton } from '../ui/skeleton';
 import { ShoppingBag, AlertTriangle, Users, Info, CheckCircle2, Clock, Filter, Trash2, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';

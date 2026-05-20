@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Card } from '../ui/Card';
-import { Button } from '../ui/Button';
-import { Badge } from '../ui/Badge';
+import { Card } from '../ui/card';
+import { Button } from '../ui/button';
+import { Badge } from '../ui/badge';
 import { Clock, ChefHat, CheckCircle2, Package, RefreshCw, AlertCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { api } from '../../services/api';

@@ -149,7 +149,7 @@ export function DashboardView() {
             ? order.items.map((i: any) => `${i.nombre} x${i.cantidad}`).join(', ')
             : (order.items || 'N/A'),
           total: order.total || 0,
-          status: (order.status || 'pending') as keyof typeof statusConfig,
+          status: (statusConfig[order.status as keyof typeof statusConfig] ? order.status : 'pending') as keyof typeof statusConfig,
           time: order.fecha ? new Date(order.fecha).toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' }) : '--:--'
         }));
       
@@ -453,7 +453,7 @@ export function DashboardView() {
           {/* Table Rows */}
           <div className="divide-y divide-border/60">
             {recentOrders.map(order => {
-              const sc = statusConfig[order.status];
+              const sc = statusConfig[order.status as keyof typeof statusConfig] || statusConfig.pending;
               return (
                 <div
                   key={order.id}

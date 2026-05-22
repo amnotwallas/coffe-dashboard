@@ -4,14 +4,17 @@ import { auth } from './firebase';
 // For production, this should be configured via environment variables (e.g., import.meta.env.VITE_API_BASE_URL)
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
+let localJwtToken: string | null = null;
+
+export const setLocalToken = (token: string | null) => {
+  localJwtToken = token;
+};
+
 async function getHeaders() {
-  // Use Firebase to get the current token directly.
-  // This is safer than localStorage as Firebase handles rotation and secure storage.
-  const token = await auth.currentUser?.getIdToken();
-  
+  // Use the local JWT token stored in memory instead of Firebase token directly
   return {
     'Content-Type': 'application/json',
-    ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+    ...(localJwtToken ? { 'Authorization': `Bearer ${localJwtToken}` } : {}),
   };
 }
 

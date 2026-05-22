@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword
 } from 'firebase/auth';
 import { auth } from '../services/firebase';
-import { api } from '../services/api';
+import { api, setLocalToken } from '../services/api';
 
 interface AuthContextType {
   user: User | null;
@@ -26,15 +26,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (firebaseUser) {
         try {
           const token = await firebaseUser.getIdToken();
-          // Verify token with backend
-          await api.loginAdmin(token);
+          // Verify token with backend and extract local JWT
+          const response = await api.loginAdmin(token);
+          if (response && response.access_token) {
+            setLocalToken(response.access_token);
+          } else {
+            console.warn("No access_token returned from backend during sync");
+          }
           setUser(firebaseUser);
         } catch (error) {
           console.error('Failed to sync auth with backend:', error);
           await signOut(auth);
+          setLocalToken(null);
           setUser(null);
         }
       } else {
+        setLocalToken(null);
         setUser(null);
       }
       setLoading(false);
@@ -48,8 +55,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, pass);
       const token = await userCredential.user.getIdToken();
-      await api.loginAdmin(token);
-      // No longer storing in localStorage for better security
+      const response = await api.loginAdmin(token);
+      
+      if (response && response.access_token) {
+        setLocalToken(response.access_token);
+      } else {
+        console.warn("No access_token returned from backend during login");
+      }
+      
       setUser(userCredential.user);
     } catch (error) {
       setLoading(false);
@@ -61,6 +74,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(true);
     try {
       await signOut(auth);
+      setLocalToken(null);
     } catch (error) {
       console.error('Error logging out:', error);
     } finally {

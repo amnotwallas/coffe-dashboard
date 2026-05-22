@@ -75,7 +75,7 @@ export function OrdersView() {
             personalizaciones: item.personalizaciones || {},
           })),
           total: apiOrder.total,
-          status: apiOrder.status as OrderStatus,
+          status: (['pending', 'preparing', 'ready', 'delivered'].includes(apiOrder.status) ? apiOrder.status : 'pending') as OrderStatus,
           time: dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           rawDate: dateObj,
           tracking: apiOrder.tracking || { preparando: false, listo: false, enCamino: false, entregado: false },

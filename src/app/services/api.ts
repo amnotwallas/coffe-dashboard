@@ -81,6 +81,6 @@ export const api = {
   loginAdmin: (token: string) => fetch(`${BASE_URL}/api/v1/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ firebase_token: token, nombre: 'Admin' })
+    body: JSON.stringify({ firebase_token: token })
   }).then(handleResponse),
 };

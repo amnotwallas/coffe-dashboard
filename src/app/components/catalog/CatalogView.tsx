@@ -128,7 +128,7 @@ export function CatalogView() {
         nombre: formData.nombre,
         descripcion: formData.descripcion,
         precio: parseFloat(formData.precio),
-        categoria_id: parseInt(formData.categoria_id),
+        category_id: parseInt(formData.categoria_id),
         intensidad: parseInt(formData.intensidad),
         ingredientes: formData.ingredientes.split(',').map(i => i.trim()).filter(i => i !== ''),
         valores_nutricionales: {
